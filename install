@@ -12,10 +12,17 @@ core() {
     exit 0
   fi
 
-  export PATH=/usr/local/bin:$PATH
+  export PATH=$HOME/.go/bin:/usr/local/go/bin:/usr/local/bin:$PATH
 
   which goclone >>/dev/null 2>&1
   if [ "$?" != "0" ]; then
+    # go installed
+    which go >>/dev/null 2>&1
+    if [ "$?" = "0" ]; then
+      go install github.com/imthaghost/goclone/cmd/goclone@latest
+      return
+    fi
+
     if [ "$(os::is_macos)" = "true" ]; then
       pm install -y goclone
     else

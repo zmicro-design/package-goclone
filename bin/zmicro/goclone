@@ -7,7 +7,7 @@ help() {
 }
 
 core() {
-  export PATH=/usr/local/bin:$PATH
+  export PATH=$HOME/.go/bin:/usr/local/go/bin:/usr/local/bin:$PATH
 
   if [ "$(os::is_macos)" = "true" ]; then
     goclone "$@"
