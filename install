@@ -1,0 +1,35 @@
+#!/bin/bash
+
+help() {
+  echo "Usage:"
+  echo "  zmicro package install goclone <args...>"
+  echo ""
+}
+
+core() {
+  if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    help
+    exit 0
+  fi
+
+  export PATH=/usr/local/bin:$PATH
+
+  which goclone >>/dev/null 2>&1
+  if [ "$?" != "0" ]; then
+    if [ "$(os::is_macos)" = "true" ]; then
+      pm install -y goclone
+    else
+      cd $ZMICRO_PLUGINS_PATH/package/packages/goclone
+      log::error "not support in current system, please create an issue to $(git::issue_url)"
+      exit 1
+    fi
+  fi
+
+  log::success "install goclone success."
+}
+
+run() {
+  core $@
+}
+
+run $@

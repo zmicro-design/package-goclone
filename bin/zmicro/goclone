@@ -1,0 +1,25 @@
+#!/bin/bash
+
+help() {
+  echo "Usage:"
+  echo "  zmicro goclone <args ...>"
+  echo ""
+}
+
+core() {
+  export PATH=/usr/local/bin:$PATH
+
+  if [ "$(os::is_macos)" = "true" ]; then
+    goclone "$@"
+  else
+    cd $ZMICRO_PLUGINS_PATH/package/packages/goclone
+    log::error "not support in current system, please create an issue to $(git::issue_url)"
+    exit 1
+  fi
+}
+
+run() {
+  core "$@"
+}
+
+run "$@"
